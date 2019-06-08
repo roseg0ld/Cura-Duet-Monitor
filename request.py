@@ -7,10 +7,10 @@ def statusRetrieval(url, cat1, cat2, index):
 def sendGcode(url,gcode):
     return requests.get('http://' + url + '/rr_gcode?gcode='+gcode)
 
-def altstatusRetrival(url):
-    return json.dumps(requests.get('http://' + url + '/rr_status?type=3').text)
+def altstatusRetrival(url,type):
+    return json.dumps(requests.get('http://' + url + '/rr_status?type='+type).text)
 
-url = '10.1.10.3'
+url = '10.1.10.156'
 coordx = statusRetrieval(url, 'coords','xyz', 0)
 coordy = statusRetrieval(url, 'coords','xyz', 1)
 coordz = statusRetrieval(url, 'coords','xyz', 2)
@@ -21,5 +21,6 @@ tempext = statusRetrieval(url, 'temps','current', 1)
 print('The Toolhead is at: (',coordx,', ',coordy,', ',coordz,')')
 print('The Extruder is ',tempext,'°C')
 print('The Bed is ',tempbed,'°C')
-sendGcode(url,'G10 P0 S0')
-print(altstatusRetrival(url))
+#sendGcode(url,'G10 P0 S0')
+print(altstatusRetrival(url,'1'))
+print(altstatusRetrival(url,'3'))
